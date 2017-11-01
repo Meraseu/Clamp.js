@@ -1,6 +1,6 @@
-;(function(clamp) {
+;(function(Clamp) {
 
-    clamp = function(element, opts) {
+    Clamp = function(element, opts) {
         
         this.element = element;
         this.opts = opts;
@@ -19,7 +19,7 @@
         this.init();
 
     }
-    clamp.prototype = {
+    Clamp.prototype = {
         init : function() {
 
             this.backdrop = document.createElement('div');
@@ -103,4 +103,4 @@
 
         }
 
-})(window.clamp = window.clamp || {});
+})(window.Clamp = window.Clamp || {});
