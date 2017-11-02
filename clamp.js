@@ -35,7 +35,7 @@ window.Clamp = (function(Clamp) {
             this.word = this.text.split(' ');
             while (this.getScrollSize() > this.getOffsetSize()) {
                 this.deleteArrayWord();
-                this.backdrop.textContent = this.setJoinWord() + ' ...';
+                this.backdrop.textContent = this.setJoinWord() + this.added;
             }
             this.backdrop.classList.remove('nowrap');
             this.setClampCharacater();
