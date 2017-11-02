@@ -1,7 +1,4 @@
-;(function(Clamp) {
-
-    console.log(Clamp);
-
+window.Clamp = (function(Clamp) {
     Clamp = function(element, opts) {
         this.element = element;
         this.opts = opts || {};
@@ -18,6 +15,7 @@
         this.added = this.opts.added || '...';
         this.init();
     }
+
     Clamp.prototype = {
         init : function() {
             this.backdrop = document.createElement('div');
@@ -37,10 +35,12 @@
         },
         setClamp : function() {
             this.word = this.text.trim().replace(this.regex, ' ').split(' ');
+            
             while (this.getScrollSize() > this.getOffsetSize()) {
                 this.deleteArrayWord();
                 this.backdrop.textContent = this.setJoinWord() + ' ...';
             }
+            console.log(this.word);
             this.backdrop.classList.remove('nowrap');
             this.setClampCharacater();
         },
@@ -85,4 +85,5 @@
             this.backdrop.classList.remove('nowrap');
         }
     }
-})(window.Clamp = window.Clamp || {});
+    return Clamp;
+})(window.Clamp || {});
