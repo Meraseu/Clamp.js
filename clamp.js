@@ -11,17 +11,9 @@ window.Clamp = (function(Clamp) {
         this.character = [];
         this.lastWord = '';
         this.lastCharacter = '';
-<<<<<<< HEAD
-        this.regex = /\s+/gi;
         this.added = this.opts.added || '...';
         this.init();
     }
-
-=======
-        this.added = this.opts.added || '...';
-        this.init();
-    }
->>>>>>> origin/develop
     Clamp.prototype = {
         init : function() {
             this.backdrop = document.createElement('div');
@@ -40,20 +32,11 @@ window.Clamp = (function(Clamp) {
             }
         },
         setClamp : function() {
-<<<<<<< HEAD
-            this.word = this.text.trim().replace(this.regex, ' ').split(' ');
-            
-=======
             this.word = this.text.split(' ');
->>>>>>> origin/develop
             while (this.getScrollSize() > this.getOffsetSize()) {
                 this.deleteArrayWord();
                 this.backdrop.textContent = this.setJoinWord() + ' ...';
             }
-<<<<<<< HEAD
-            console.log(this.word);
-=======
->>>>>>> origin/develop
             this.backdrop.classList.remove('nowrap');
             this.setClampCharacater();
         },
