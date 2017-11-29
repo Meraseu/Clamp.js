@@ -7,7 +7,7 @@ type : `string`, default : `...`
 # Sample Usage
 
 ```
-var clamp = new Dropdown(document.querySelector('.clamp'), {
+var clamp = new Clamp(document.querySelector('.clamp'), {
 	added : '...'
 });
 ```
