@@ -1,8 +1,8 @@
 # Options
 
-#### defaultText
+#### added
 
-added : `string`, default : `...`
+type : `string`, default : `...`
 
 # Sample Usage
 
