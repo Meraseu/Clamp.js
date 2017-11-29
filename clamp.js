@@ -2,7 +2,6 @@ window.Clamp = (function(Clamp) {
     Clamp = function(element, opts) {
         this.element = element;
         this.opts = opts || {};
-        this.text = this.element.textContent;
         this.scrollSize = 0;
         this.offsetSize = 0;
         this.wordCount = 0;
@@ -12,23 +11,34 @@ window.Clamp = (function(Clamp) {
         this.lastWord = '';
         this.lastCharacter = '';
         this.added = this.opts.added || '...';
+        this.length = this.element.length;
+        this.text = (this.length > 0) ? '' : this.getElementText(this.element);
         this.init();
     }
     Clamp.prototype = {
         init : function() {
+            if (this.length === undefined) {
+                this.checkClamp();
+            } else {
+                for(var i=0, length=this.length; i<length; i++) {
+                    this.text = this.getElementText(this.element[i])
+                    this.checkClamp(this.element[i], this.text);
+                }
+            }
+        },
+        checkClamp : function(element, text) {
             this.backdrop = document.createElement('div');
-            var text = document.createTextNode(this.text);
             this.backdrop.className = 'backdrop';
-            this.backdrop.appendChild(text);
-            this.element.appendChild(this.backdrop);
+            this.backdrop.appendChild(document.createTextNode(text));
+            element.appendChild(this.backdrop);
             this.backdrop.classList.add('nowrap');
             this.scrollSize = this.getScrollSize();
             this.offsetSize = this.getOffsetSize();
-            if(this.scrollSize > this.offsetSize) {
+            if (this.scrollSize > this.offsetSize) {
                 this.setClamp();
-                this.backdrop.setAttribute('aria-hidden','true');
+                this.backdrop.setAttribute('aria-hidden', 'true');
             } else {
-                this.element.removeChild(this.backdrop);
+                element.removeChild(this.backdrop);
             }
         },
         setClamp : function() {
@@ -39,6 +49,9 @@ window.Clamp = (function(Clamp) {
             }
             this.backdrop.classList.remove('nowrap');
             this.setClampCharacater();
+        },
+        getElementText : function(element) {
+            return element.textContent || element.innerText;
         },
         getWordCount : function() {
             return this.word.length;
