@@ -1,0 +1,24 @@
+{
+    "name": "Clamp.js",
+    "version": "0.0.1",
+    "description": "",
+    "author": {
+        "name": "meraseudev",
+        "email": "meraseudev@gmail.com",
+        "url": "https://github.com/Meraseu/Clamp.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Meraseu/Clamp.js"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "http://www.opensource.org/licenses/MIT"
+        }
+    ],
+    "keywords": [
+        "ellipsis",
+        "clamp"
+    ]
+}
