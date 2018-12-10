@@ -1,24 +1,35 @@
 {
-    "name": "ellipsis-js",
-    "version": "0.0.4",
-    "description": "",
-    "author": {
-        "name": "meraseudev",
-        "email": "meraseudev@gmail.com",
-        "url": "https://github.com/Meraseu/Clamp.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/Meraseu/Clamp.js"
-    },
-    "licenses": [
-        {
-            "type": "MIT",
-            "url": "http://www.opensource.org/licenses/MIT"
-        }
-    ],
-    "keywords": [
-        "ellipsis",
-        "clamp"
-    ]
+  "name": "clamp",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server --mode development --config webpack.dev.js --open",
+    "build": "webpack --mode production --config webpack.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://meraseu@github.com/Meraseu/Clamp.js.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Meraseu/Clamp.js/issues"
+  },
+  "homepage": "https://github.com/Meraseu/Clamp.js#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.5",
+    "@babel/preset-env": "^7.1.5",
+    "babel-loader": "^8.0.4",
+    "clean-webpack-plugin": "^0.1.19",
+    "html-webpack-plugin": "^3.2.0",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  }
 }
