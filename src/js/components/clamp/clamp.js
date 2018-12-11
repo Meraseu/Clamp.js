@@ -2,8 +2,7 @@
 
 export default class Clamp {
     constructor(element, options) {
-        if(!element || this.getElementText(element) === '') {
-            console.log('no element');
+        if(!element) {
             return;
         }
         options = Object.assign({
@@ -11,29 +10,24 @@ export default class Clamp {
         }, options);
         this.element = element;
         this.content = this.element.querySelector('.content');
-
+        this.currentWidth = this.element.offsetWidth;        
         this.outerOffsetWidth = this.element.offsetWidth;
         this.innerOffsetWidth = this.content.offsetWidth;
         this.gutter = this.outerOffsetWidth - this.innerOffsetWidth;
-
-
-
         this.word = '';
         this.lastWord = '';
         this.character = '';
         this.lastCharacter = '';
-        this.currentWidth = this.element.offsetWidth;
-        
         this.options = options;
-        this.setup();
     }
-    setup() {
+    initialize() {
+        if(this.getElementText(this.element) === '') {
+            return;
+        }
         this.content.style.width = (this.innerOffsetWidth + this.gutter) + 'px';
         if (this.getScrollSize(this.element) > this.getOffsetSize(this.element)) {
             this.render();
         }
-        // this.element.classList.remove('nowrap');
-        // this.element.removeAttribute('style');
     }
     render() {
         this.backdrop = document.createElement('div');
@@ -47,19 +41,34 @@ export default class Clamp {
         this.setClampWord(value);
     }
     setClampWord(value) {
-        this.word = value.split(' ');                
+        this.word = value.split(' ');
+        let i = 0;            
         while (this.getScrollSize(this.backdrop) > this.getOffsetSize(this.backdrop)) {
+            i++;
             this.deleteArrayWord();
             this.backdrop.innerHTML = this.setJoinWord() + this.options.added;
+            if(i > 100) {
+                console.log('too much word');
+                break;
+            }
         }
         this.setClampCharacter();
     }
     setClampCharacter() {
-        this.backdrop.innerHTML = this.setJoinWord() + ' ' + this.lastWord + this.options.added;
+        this.backdrop.innerHTML = this.setJoinWord() + this.lastWord + this.options.added;
         this.character = this.lastWord.split('');
+        let i = 0;
         while (this.getScrollSize(this.backdrop) > this.getOffsetSize(this.backdrop)) {
+            i++;
+            if(this.character.length < 1) {
+                break;
+            }
             this.deleteArrayCharacter();
-            this.backdrop.innerHTML = this.setJoinWord() + ' ' + this.setJoinCharacter() + this.options.added;
+            this.backdrop.innerHTML = this.setJoinWord() + this.setJoinCharacter() + this.options.added;
+            if(i > 100) {
+                console.log('too much character');
+                break;
+            }
         }
         this.element.classList.remove('nowrap');
     }
@@ -75,7 +84,7 @@ export default class Clamp {
         this.word.splice(count, 1);        
     }
     deleteArrayCharacter() {
-        this.character.splice(this.getCharacterCount() - 1, 1);
+        this.character.splice(this.getCharacterCount() - 1, 1);        
     }
     getWordCount() {
         return this.word.length;
@@ -93,102 +102,3 @@ export default class Clamp {
         return element.offsetHeight;
     }
 }
-
-// window.Clamp = (function(Clamp) {
-//     Clamp = function(element, opts) {
-//         this.element = element;
-//         this.opts = opts || {};
-//         this.scrollSize = 0;
-//         this.offsetSize = 0;
-//         this.wordCount = 0;
-//         this.word = [];
-//         this.characeterCount = 0;
-//         this.character = [];
-//         this.lastWord = '';
-//         this.lastCharacter = '';
-//         this.added = this.opts.added || '...';
-//         this.length = this.element.length;
-//         this.text = (this.length > 0) ? '' : this.getElementText(this.element);
-//         this.init();
-//     }
-//     Clamp.prototype = {
-//         init : function() {
-//             if (this.length === undefined) {
-//                 this.checkClamp();
-//             } else {
-//                 for(var i=0, length=this.length; i<length; i++) {
-//                     this.text = this.getElementText(this.element[i])
-//                     this.checkClamp(this.element[i], this.text);
-//                 }
-//             }
-//         },
-//         checkClamp : function(element, text) {
-//             this.backdrop = document.createElement('div');
-//             this.backdrop.className = 'backdrop';
-//             this.backdrop.appendChild(document.createTextNode(text));
-//             element.appendChild(this.backdrop);
-//             this.backdrop.classList.add('nowrap');
-//             this.scrollSize = this.getScrollSize();
-//             this.offsetSize = this.getOffsetSize();
-//             if (this.scrollSize > this.offsetSize) {
-//                 this.setClamp();
-//                 this.backdrop.setAttribute('aria-hidden', 'true');
-//             } else {
-//                 element.removeChild(this.backdrop);
-//             }
-//         },
-//         setClamp : function() {
-//             this.word = this.text.split(' ');
-//             while (this.getScrollSize() > this.getOffsetSize()) {
-//                 this.deleteArrayWord();
-//                 this.backdrop.textContent = this.setJoinWord() + this.added;
-//             }
-//             this.backdrop.classList.remove('nowrap');
-//             this.setClampCharacater();
-//         },
-//         getElementText : function(element) {
-//             return element.textContent || element.innerText;
-//         },
-//         getWordCount : function() {
-//             return this.word.length;
-//         },
-//         getCharacterCount : function() {
-//             return this.character.length;
-//         },
-//         deleteArrayWord : function(count) {
-//             var count = this.getWordCount() - count || this.getWordCount() - 1;
-//             this.lastWord = this.word[count];
-//             this.word.splice(count, 1);
-//         },
-//         deleteArrayCharacter : function() {
-//             this.lastCharacter = this.character[this.getCharacterCount() - 1];
-//             this.character.splice(this.getCharacterCount() - 1, 1);
-//         },
-//         setJoinWord : function() {
-//             return this.word.join(' ');
-//         },
-//         setJoinCharacter : function() {
-//             return this.character.join('');
-//         },
-//         getScrollSize : function() {
-//             return this.backdrop.scrollHeight;
-//         },
-//         getOffsetSize : function() {
-//             return this.backdrop.offsetHeight;
-//         },
-//         setClampCharacater : function() {
-//             this.backdrop.classList.add('nowrap');
-//             this.backdrop.textContent = this.setJoinWord() + ' ' + this.lastWord + this.added;
-//             this.character = this.lastWord.split('');
-//             this.deleteArrayCharacter();
-//             this.backdrop.textContent = this.setJoinWord() + ' ' + this.setJoinCharacter() +  this.added;
-//             while (this.getScrollSize() > this.getOffsetSize()) {
-//                 this.deleteArrayCharacter();
-//                 this.backdrop.textContent = this.setJoinWord() + ' ' + this.setJoinCharacter() + this.added;
-//             }
-//             this.backdrop.textContent = this.setJoinWord() + ' ' + this.setJoinCharacter() + this.lastCharacter + this.added;
-//             this.backdrop.classList.remove('nowrap');
-//         }
-//     }
-//     return Clamp;
-// })(window.Clamp || {});
