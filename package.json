@@ -1,11 +1,7 @@
 {
   "name": "clamp",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "example": "example"
-  },
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --mode development --config webpack.dev.js --open",

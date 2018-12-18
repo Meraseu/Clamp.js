@@ -6,7 +6,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: {
-        'clamp': './src/clamp'
+        'app': './src/js/app'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
